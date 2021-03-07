@@ -1,0 +1,12 @@
+{
+    "require": {
+        "textalk/websocket": "^1.5",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "TransactionParser\\": "src/"
+        },
+        "files": ["config.php"]
+    }
+}

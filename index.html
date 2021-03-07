@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row-fluid">
+        <div class="container">
+            <div class="col-sm-12 text-center">
+                <h3>Тестовое задание</h3>
+            </div>
+            <div class="col-sm-6">
+                <div class="well">
+                    Стастус подключения: <span id="connectStatus"></span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-6">
+                <table class="table table-bordered table-striped">
+                    <caption>Последние 10 блоков:</caption>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Block</th>
+                        </tr>
+                    </thead>
+                    <tbody id="blocks"></tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <table class="table table-bordered table-striped">
+                    <caption>Хеши транзакций для последнего блока</caption>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Hash</th>
+                    </tr>
+                    </thead>
+                    <tbody id="transactions"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/client.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
+</html>
