@@ -6,18 +6,19 @@ use Exception;
 use PDO;
 use WebSocket;
 
-
-// TODO: сделать проверку на error в json с ответом от сервера а не на наличие элементов в result
 class Parser
 {
+    const MAX_BLOCKS_LIMIT = 100000;
     protected $client;
     protected $checkedBlock = [];
 
-    public function __construct()
+    public function __construct($headers = null)
     {
-        $headers = [
-            "Content-Type: application/json"
-        ];
+        if (is_null($headers)) {
+            $headers = [
+                "Content-Type: application/json"
+            ];
+        }
         $this->client = new WebSocket\Client(INFURA_WEBSOCKET.INFURA_PROJECT_ID, ["headers" => $headers]);
     }
 
@@ -35,7 +36,7 @@ class Parser
         ];
         $this->client->text(json_encode($request));
         $lastBlock = json_decode($this->client->receive(), true);
-        if (!empty($lastBlock) && isset($lastBlock["result"])) {
+        if (!empty($lastBlock) && !isset($lastBlock["error"])) {
             $blockNumber = $lastBlock["result"];
         }
         return $blockNumber;
@@ -57,7 +58,7 @@ class Parser
         $this->client->text(json_encode($request));
         $response = json_decode($this->client->receive(), true);
 
-        if (!empty($response) && isset($response["result"]["transactions"])) {
+        if (!empty($response) && !isset($response["error"])) {
             $transactions = $response["result"]["transactions"];
         }
         return $transactions;
@@ -100,16 +101,28 @@ class Parser
         unset($db);
     }
 
-    // TODO: реализовать очистку таблиц перед запуском
-    // TODO: реализовать отправку в серверу сообщения о том что есть новый блок для запроса к БД (дабы уменьшить запросы к БД. Использовать соккеты)
+    /**
+     * Примитивная защита от переполнения памяти. Тупо дропнем массив с проверенными блоками при достижении лимита.
+     * Решение спорное
+     */
+    protected function clearCheckedBlocksHistory()
+    {
+        if (count($this->checkedBlock) > self::MAX_BLOCKS_LIMIT) {
+            $this->checkedBlock = [];
+        }
+    }
+
     public function exec() : void
     {
         do {
             $blockNumber    = $this->getBlock();
             $transactions   = $this->getTransactions($blockNumber);
-            if (""  === $blockNumber || isset($this->checkedBlock[$blockNumber]) || empty($transactions)) {
+            $this->clearCheckedBlocksHistory();
+
+            if (isset($this->checkedBlock[$blockNumber]) || empty($transactions)) {
                 continue;
             }
+
             $this->writeTransaction($blockNumber, $transactions);
             $this->checkedBlock[$blockNumber] = true;
         } while(true);

@@ -13,6 +13,7 @@ class ComposerStaticInit5ab28416222b60efac3af22a41238f7c
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
+            'Workerman\\' => 10,
             'WebSocket\\' => 10,
         ),
         'T' => 
@@ -26,6 +27,10 @@ class ComposerStaticInit5ab28416222b60efac3af22a41238f7c
     );
 
     public static $prefixDirsPsr4 = array (
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
+        ),
         'WebSocket\\' => 
         array (
             0 => __DIR__ . '/..' . '/textalk/websocket/lib',

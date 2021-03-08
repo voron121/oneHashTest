@@ -1,9 +1,7 @@
 <?php
-/*
- * TODO: нужно изменить алгоритм работы сервера. Сервер должен получать сообщение от нового клиента и форкать процесс.
- * В противном случае (как сейчас), работа сервера возможна только с одним клиентом
- */
-use WebSocket\Server;
+
+use Workerman\Worker;
+use \Workerman\lib\Timer;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -34,22 +32,18 @@ function getData()
     return json_encode($data);
 }
 
-$options = array_merge([
-    'port'          => 8000,
-    'timeout'       => 1,
-    'filter'        => ['text', 'binary', 'ping', 'pong'],
-], getopt('', ['port:', 'timeout:', 'debug']));
+$ws_worker = new Worker('websocket://127.0.0.1:2346');
+$ws_worker->count = 1;
 
-$server = new Server($options);
-do {
-    while ($server->accept()) {
-        try {
-            do {
-                $server->send(getData(), "text", false);
-                sleep(1);
-            } while(true);
-        } catch (\Throwable $e) {
-            echo "ERROR: {$e->getMessage()} [{$e->getCode()}]\n";
-        }
-    }
-} while(true);
+$ws_worker->onConnect = function ($connection) {
+    Timer::add(1, function () use ($connection) {
+        $connection->send(getData($connection));
+    });
+    echo "New connection\n";
+};
+
+$ws_worker->onClose = function ($connection) {
+    echo "Connection closed\n";
+};
+
+Worker::runAll();

@@ -38,5 +38,14 @@
       ),
       'reference' => 'b93249453806a2dd46495de46d76fcbcb0d8dee8',
     ),
+    'workerman/workerman' => 
+    array (
+      'pretty_version' => 'v4.0.19',
+      'version' => '4.0.19.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'af6025976fba817eeb4d5fbf8d0c1059a5819da3',
+    ),
   ),
 );

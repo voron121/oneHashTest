@@ -19,7 +19,7 @@ function renderData(data) {
     transactionsTable.innerHTML = transactions;
 }
 
-let socket = new WebSocket('ws://localhost:8000');
+let socket = new WebSocket('ws://127.0.0.1:2346');
 socket.onopen = function() {
     document.getElementById("connectStatus").innerHTML = '<span class="badge badge-success">Соединение установлено</span>';
 };

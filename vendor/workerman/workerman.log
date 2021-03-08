@@ -1,0 +1,49 @@
+2021-03-08 01:21:32 pid:1 Error: Call to undefined method Workerman\Connection\TcpConnection::getRemoteHost() in F:\openserver\domains\websocket\vendor\workerman\workerman\Protocols\Ws.php:366
+Stack trace:
+#0 F:\openserver\domains\websocket\vendor\workerman\workerman\Protocols\Ws.php(238): Workerman\Protocols\Ws::sendHandshake()
+#1 F:\openserver\domains\websocket\vendor\workerman\workerman\Connection\TcpConnection.php(321): Workerman\Protocols\Ws::encode()
+#2 F:\openserver\domains\websocket\server2.php(45): Workerman\Connection\TcpConnection->send()
+#3 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2497): {closure}()
+#4 F:\openserver\domains\websocket\vendor\workerman\workerman\Events\Select.php(293): Workerman\Worker->acceptConnection()
+#5 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2430): Workerman\Events\Select->loop()
+#6 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1417): Workerman\Worker->run()
+#7 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1360): Workerman\Worker::forkWorkersForWindows()
+#8 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(542): Workerman\Worker::forkWorkers()
+#9 F:\openserver\domains\websocket\server2.php(60): Workerman\Worker::runAll()
+#10 {main}
+2021-03-08 01:21:32 pid:1 Worker process terminated
+2021-03-08 01:21:43 pid:1 Error: Call to undefined method Workerman\Connection\TcpConnection::getRemoteHost() in F:\openserver\domains\websocket\vendor\workerman\workerman\Protocols\Ws.php:366
+Stack trace:
+#0 F:\openserver\domains\websocket\vendor\workerman\workerman\Protocols\Ws.php(238): Workerman\Protocols\Ws::sendHandshake()
+#1 F:\openserver\domains\websocket\vendor\workerman\workerman\Connection\TcpConnection.php(321): Workerman\Protocols\Ws::encode()
+#2 F:\openserver\domains\websocket\server2.php(45): Workerman\Connection\TcpConnection->send()
+#3 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2497): {closure}()
+#4 F:\openserver\domains\websocket\vendor\workerman\workerman\Events\Select.php(293): Workerman\Worker->acceptConnection()
+#5 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2430): Workerman\Events\Select->loop()
+#6 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1417): Workerman\Worker->run()
+#7 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1360): Workerman\Worker::forkWorkersForWindows()
+#8 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(542): Workerman\Worker::forkWorkers()
+#9 F:\openserver\domains\websocket\server2.php(60): Workerman\Worker::runAll()
+#10 {main}
+2021-03-08 01:21:43 pid:1 Worker process terminated
+2021-03-08 01:41:38 pid:1 ArgumentCountError: Too few arguments to function getData(), 0 passed in F:\openserver\domains\websocket\server2.php on line 45 and exactly 1 expected in F:\openserver\domains\websocket\server2.php:10
+Stack trace:
+#0 F:\openserver\domains\websocket\server2.php(45): getData()
+#1 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2497): {closure}()
+#2 F:\openserver\domains\websocket\vendor\workerman\workerman\Events\Select.php(293): Workerman\Worker->acceptConnection()
+#3 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2430): Workerman\Events\Select->loop()
+#4 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1417): Workerman\Worker->run()
+#5 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1360): Workerman\Worker::forkWorkersForWindows()
+#6 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(542): Workerman\Worker::forkWorkers()
+#7 F:\openserver\domains\websocket\server2.php(63): Workerman\Worker::runAll()
+#8 {main}
+2021-03-08 01:41:38 pid:1 Worker process terminated
+2021-03-08 01:49:25 pid:1 Error: Call to undefined method Workerman\Worker::send() in F:\openserver\domains\websocket\server2.php:40
+Stack trace:
+#0 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2415): {closure}()
+#1 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1417): Workerman\Worker->run()
+#2 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1360): Workerman\Worker::forkWorkersForWindows()
+#3 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(542): Workerman\Worker::forkWorkers()
+#4 F:\openserver\domains\websocket\server2.php(63): Workerman\Worker::runAll()
+#5 {main}
+2021-03-08 01:49:26 pid:1 Worker process terminated
