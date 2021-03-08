@@ -58,17 +58,36 @@ class Parser
         $this->client->text(json_encode($request));
         $response = json_decode($this->client->receive(), true);
 
-        if (!empty($response) && !isset($response["error"])) {
+        if (!empty($response) && is_array($response["result"]["transactions"])) {
             $transactions = $response["result"]["transactions"];
         }
         return $transactions;
     }
 
     /**
+     * Вернет ассоциативный массив с транзакциями для последнего блока. Ключь массива - ид последнего блока
+     * @return array[]
+     * @throws Exception
+     */
+    protected function getTransactionsAndBloksData() : array
+    {
+        $lastBlock = $this->getBlock();
+        if ("" === $lastBlock || isset($this->checkedBlock[$lastBlock])) {
+            throw new Exception("Fail getting last block hash");
+        }
+        $transactions = $this->getTransactions($lastBlock);
+        if (empty($transactions)) {
+            throw new Exception("Fail getting transactions for last block");
+        }
+        $this->checkedBlock[$lastBlock] = true;
+        return [$lastBlock => $transactions];
+    }
+
+    /**
      * @param string $block
      * @param array $transactions
      */
-    protected function writeTransaction(string $block, array $transactions) : void
+    protected function writeTransaction() : void
     {
         $db = new PDO('mysql:host=' . DATABASE_HOST . ';charset=utf8', DATABASE_USER_LOGIN, DATABASE_USER_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -82,20 +101,21 @@ class Parser
 
         try {
             $db->beginTransaction();
-            $stmt->execute(["block" => $block]);
-            $lastBlockId = $db->lastInsertId();
-            if (is_null($lastBlockId)) {
-                throw new Exception("Error write block");
-            }
-            foreach ($transactions as $transactionHash) {
-                $transactionStmt->execute([
-                    "blockId" => $lastBlockId,
-                    "transactionHash" => $transactionHash
-                ]);
-            }
+                foreach ($this->getTransactionsAndBloksData() as $block => $transactions) {
+                    $stmt->execute(["block" => $block]);
+                    $lastBlockId = $db->lastInsertId();
+                    if (is_null($lastBlockId)) {
+                        throw new Exception("Error write block");
+                    }
+                    foreach ($transactions as $transactionHash) {
+                        $transactionStmt->execute([
+                            "blockId" => $lastBlockId,
+                            "transactionHash" => $transactionHash
+                        ]);
+                    }
+                }
             $db->commit();
         } catch(Exception $e) {
-            echo $e->getMessage();
             $db->rollBack();
         }
         unset($db);
@@ -115,16 +135,13 @@ class Parser
     public function exec() : void
     {
         do {
-            $blockNumber    = $this->getBlock();
-            $transactions   = $this->getTransactions($blockNumber);
-            $this->clearCheckedBlocksHistory();
-
-            if (isset($this->checkedBlock[$blockNumber]) || empty($transactions)) {
+            try {
+                $this->clearCheckedBlocksHistory();
+                $this->writeTransaction();
+            } catch (Exception $e) {
+                echo $e->getMessage();
                 continue;
             }
-
-            $this->writeTransaction($blockNumber, $transactions);
-            $this->checkedBlock[$blockNumber] = true;
         } while(true);
     }
 }

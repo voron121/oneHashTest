@@ -47,3 +47,14 @@ Stack trace:
 #4 F:\openserver\domains\websocket\server2.php(63): Workerman\Worker::runAll()
 #5 {main}
 2021-03-08 01:49:26 pid:1 Worker process terminated
+2021-03-08 15:04:19 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught PDOException: SQLSTATE[HY000] [2002] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение.
+ in F:\openserver\domains\websocket\server.php:11
+Stack trace:
+#0 F:\openserver\domains\websocket\server.php(11): PDO->__construct()
+#1 F:\openserver\domains\websocket\server.php(40): getData()
+#2 F:\openserver\domains\websocket\vendor\workerman\workerman\Events\Select.php(232): {closure}()
+#3 F:\openserver\domains\websocket\vendor\workerman\workerman\Events\Select.php(281): Workerman\Events\Select->tick()
+#4 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(2430): Workerman\Events\Select->loop()
+#5 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1417): Workerman\Worker->run()
+#6 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(1360): Workerman\Worker::forkWorkersForWindows()
+#7 F:\openserver\domains\websocket\vendor\workerman\workerman\Worker.php(542):  in F:\openserver\domains\websocket\server.php on line 11"
