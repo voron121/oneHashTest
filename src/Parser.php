@@ -125,7 +125,7 @@ class Parser
      * Примитивная защита от переполнения памяти. Тупо дропнем массив с проверенными блоками при достижении лимита.
      * Решение спорное
      */
-    protected function clearCheckedBlocksHistory()
+    protected function clearCheckedBlocksHistory() : void
     {
         if (count($this->checkedBlock) > self::MAX_BLOCKS_LIMIT) {
             $this->checkedBlock = [];
