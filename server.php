@@ -37,7 +37,7 @@ $ws_worker->count = 1;
 
 $ws_worker->onConnect = function ($connection) {
     Timer::add(1, function () use ($connection) {
-        $connection->send(getData($connection));
+        $connection->send(getData());
     });
     echo "New connection\n";
 };
